@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --color-primary: #9F6C68;
+  --color-rosa: #9F6C68;
+  --color-rosa-chiaro: #D8B4A0;
+}
+
+@layer base {
+  body {
+    @apply antialiased text-[#444] bg-[#F9F7F5] font-normal;
+  }
+}
+
+.bg-beige-fondo {
+  background-color: #F9F7F5;
+}
+
+.bg-rosa-fondo {
+  background-color: #FDF9F7;
+}
+
+.markdown-body {
+  font-family: var(--font-sans);
+}
