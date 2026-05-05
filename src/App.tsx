@@ -66,15 +66,28 @@ export default function App() {
     
     const alerts = [];
 
-    // Margin alerts
+    // Compound feedback logic
+    const price = parseFloat(clientPrice) || 0;
+    const hours = parseFloat(workHours) || 0;
+    const targetVal = parseFloat(idealRate) || 25; // Default floor of 25€/h if no target
+
+    // Priority 1: Check hourly rate vs target
+    if (results.hourlyProfit < targetVal && hasCalculated) {
+      if (results.hourlyProfit < targetVal * 0.5) {
+        return { type: "error", message: "Attenzione: stai lavorando molto sotto il tuo obiettivo orario." };
+      }
+      return { type: "warning", message: `Sostenibilità bassa: la tua resa oraria (€${results.hourlyProfit.toFixed(2)}) è inferiore al target.` };
+    }
+
+    // Priority 2: Check Margin
     if (results.margin >= 40) {
       return { type: "success", message: "Ottimo! Questo è un progetto sano e sostenibile." };
     } else if (results.margin >= 20) {
       return { type: "info", message: "Buon margine, ma migliorabile." };
     } else {
-      return { type: "error", message: "Attenzione: progetto poco sostenibile." };
+      return { type: "error", message: "Attenzione: progetto poco sostenibile (margine troppo basso)." };
     }
-  }, [results, hasCalculated]);
+  }, [results, hasCalculated, idealRate, workHours, clientPrice]);
 
   const handleCalculate = () => {
     setHasCalculated(true);
